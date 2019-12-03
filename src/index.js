@@ -4,12 +4,28 @@ import ReactDOM from 'react-dom'
 
 
 class App extends React.Component {
-    render(){
+
+    // Not compulsory in React, comes from Javascript. 
+    // to initialize State, ceremonials steps with constructor 
+    constructor(props) {
+        // super is compulsory, at the beginning
+        super(props)
+
+        this.state = {lat: null}
+
         window.navigator.geolocation.getCurrentPosition(
-            (position) => console.log(position),
-            (err) => console.log(err)
+            position => {
+                // we called setState !!!
+                this.setState({ lat: position.coords.latitude })
+            },
+            err => console.log(err)
         )
-        return <div> Latitude : </div> 
+    }
+
+    // Compulsory in React
+    render(){
+    return <div> Latitude : {this.state.lat}</div> 
     }
 }
+
 ReactDOM.render(<App />, document.querySelector("#root"))
